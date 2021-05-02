@@ -20,6 +20,8 @@
         "react-hooks"
     ],
     "rules": {
+        "semi": ["error","always"],
+        "react/react-in-jsx-scope": ["off", "never"],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
     },

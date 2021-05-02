@@ -1,0 +1,10 @@
+{
+  "editor.tabSize": 2,
+  "eslint.alwaysShowStatus": true,
+    "eslint.packageManager": "yarn",
+    "eslint.codeActionsOnSave.mode": "problems",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.formatOnSave": true,
+}

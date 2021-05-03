@@ -1,15 +1,33 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import ChatAPI from "../../lib/chat";
 
-const FriendStatus = ({ friendId }) => {
+const useFriendStatus = (friendId) => {
+  const [isOnline, setIsOnline] = useState(null);
   useEffect(() => {
-    console.log(friendId);
+    const handleStatusChange = (status) => {
+      setIsOnline(status.isOnline);
+    };
+
+    ChatAPI.subscribeToFriendStatus(friendId, handleStatusChange);
+    return () => ChatAPI.unsubcribeToFriendStatus(friendId, handleStatusChange);
   }, [friendId]);
-  return <div></div>;
+  return isOnline;
+};
+
+const FriendStatus = (props) => {
+  const isOnline = useFriendStatus(props.friend.id);
+
+  if (isOnline === null) {
+    return "Loading";
+  }
+  return isOnline ? "Online" : "offline";
 };
 
 FriendStatus.propTypes = {
-  friendId: PropTypes.string,
+  friend: PropTypes.exact({
+    id: PropTypes.string,
+  }),
 };
 
 export default FriendStatus;

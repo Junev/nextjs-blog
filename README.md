@@ -8,7 +8,7 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 > 1.  难以在组件间服用状态逻辑；render Props, HOC 会使增加组件层级。Hooks 不会增加组件层级。
 > 2.  复杂的组件变得难以理解。组件中充斥大量状态逻辑、副总用，同时生命周期函数内包含不相关的逻辑。Hooks 通过将相关逻辑组织在一起，把组件拆分成为更小的函数。
-> 3.  Class 使人困惑。this 的表现与其他语言不同。Class 组件在不注意时，会使得优化效果下降。Hooks 提供了不使用 class 条件下，使用 React 特性的功能。
+> 3.  Class 使人困惑。this 的表现与其他语言不同。Class 组件在不注意时，会使得优化效果下降。Hooks 提供了不使用 class 条件下，使用 React 特性的能力。
 
 ## Hook at a Glance
 
@@ -61,3 +61,89 @@ Tip: 通过跳过 Effects 优化性能:
 &emsp;&emsp;通过依赖项与前一次的比较,如果相同跳过执行副作用.
 
 > 确保在 deps 中包含了组件作用域中随时间改变, 并在 effects 中使用的值.否则副作用将接收到前一次 render 的值.
+
+## Rules of Hooks
+
+1. 只在顶层调用 hooks，不要在循环、条件、嵌套中调用。这条规则确保每次 render 的时候 Hooks 都被以相同的顺序调用，从而使得在多次 useState 和 useEffect 调用时，React 能够正确的保存 hooks 的状态。
+2. 只在 React 函数组件内调用 Hooks。不要在正常的 JavaScript 函数中调用 hooks，正确的做法是：  
+   &emsp; 1. 在 React 函数组件内调用 Hooks；  
+   &emsp; 2. 在自定义的 Hooks 内调用 Hooks;
+3. React 依赖于 Hooks 调用的顺序获取 state，
+
+![Alt wrap effect with condition](<.\public\images\屏幕截图(43).png>)
+
+![Alt not found last queue](<.\public\images\屏幕截图(47).png>)
+
+![Alt hook](<.\public\images\屏幕截图(49).png>)
+
+## Building Your Own Hooks
+
+自定义的 Hooks 是一种遵守 Hooks 设计的约定，而不是一个 React 特性。  
+自定义的 Hooks 函数名以 use 开头。  
+使用同一个 Hook 并不会共享 state。自定义的 Hooks 提供了一种重用状态逻辑的机制。在每一次使用一个自定义 Hook 的时候，其内部的状态和逻辑是完全隔离的。
+
+## Hooks API Reference
+
+### Basic Hooks
+
+#### useState
+
+1. 接受一个初始状态，把组件的一次 re-render 加入队列。
+2. 参数为函数形式时，可以获取到上次的 state。如果 update 函数返回值与当前值相同，React 会跳过 re-render（Object.is()）。
+3. 延迟初始化 state。初始化时提供一个初始化函数。
+4. 当 render 时需要执行昂贵操作时，使用 useMemo 优化。
+
+#### useEffect
+
+1. 传递给 useEffect 的函数将在 render 完成后执行。useEffect 是一个从函数式编程到命令式编程的逃生出口。
+2. clean-up 函数在组件从 UI 中移除前执行。
+3. 传递给 useEffect 的函数在每次 layout 和 paint 后执行。useLayoutEffect 中的函数在每次 render 前执行。
+4. 默认 effects 会在每次 render 后执行，如果其依赖改变，effect 总会重新创建。  
+   在不需要每次 update 时产生一次新的订阅时，使用 useEffect 的第二个参数，添加依赖项。
+   > 确保 deps 数组中添加了组件作用域内 effect 中使用的所有依赖
+   > deps 数组表示的是：每一个在 effect 函数中引用的值，都要在 deps 中。
+
+#### useContext
+
+1. 即使祖先使用了 React.memo 或 shouldComponentUpdate，使用了 useContext 的组件仍然会重新渲染。
+2. 正确的参数：useContext(MyContext)
+3. 使用了 useContext 的组件会在 context 值改变时重新渲染。
+
+### Addtional Hooks
+
+#### useReducer
+
+1. state 复杂时，useState 的替代方案。另一方面，在组件深度更新时，通过向下传递 dispatch 而不是 callback 有助于优化性能。
+2. 延迟初始化：传递延迟函数作为第三个参数。
+
+#### useCallback
+
+1. 返回一个被缓存的 callback。
+2. 用途：传递 callback 给经过优化的子组件，子组件依赖引用相等性比较,从而避免不必要的更新。
+3. useCallback(fn, deps) 等价于 useMemo(() => fn, deps)
+
+#### useMemo
+
+1. 返回一个被缓存的值。
+2. 传递给 useMemo 的函数在 render 的时候执行，不要在内部执行副作用。
+3. useMemo 只是一种性能优化，不是语义上的保证。未来，React 可能忘记缓存过的值，在下次 render 的时候宠幸计算。
+
+#### useRef
+
+1. 返回一个可变的 ref 对象，其.current 属性使用传递的 initialValue 值初始化。
+2. 用途：
+   1. 操作 dom;
+   2. 保存变量，类似于 class 中的实例变量。
+3. 除非做延迟初始化，避免在 render 时设置 refs（会导致令惊奇的行为）。典型使用：在 event handler 和 effects 中使用。
+
+#### useImperativeHandle
+
+1. 当使用 ref 时自定义暴露给父组件的实例值。useImperativeHanlde 应该与 forwardRef 一起使用。
+
+#### useLayoutEffect
+
+1. Dom 变更后同步调用 Effect
+
+#### useDebugValue
+
+1. 用途：在 React 开发者工具中显示自定义 Hook 的标签。

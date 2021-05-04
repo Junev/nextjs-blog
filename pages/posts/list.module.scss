@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+  overflow: auto;
+}
+
+.phantom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: antiquewhite;
+  z-index: -1;
+}
+
+.list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}

@@ -70,11 +70,13 @@ Tip: 通过跳过 Effects 优化性能:
    &emsp; 2. 在自定义的 Hooks 内调用 Hooks;
 3. React 依赖于 Hooks 调用的顺序获取 state，
 
-![Alt wrap effect with condition](<.\public\images\屏幕截图(43).png>)
+![Alt wrap effect with condition](<public/images/屏幕截图(43).png>)
 
-![Alt not found last queue](<.\public\images\屏幕截图(47).png>)
+![Alt not found last queue](<public/images/屏幕截图(47).png>)
 
-![Alt hook](<.\public\images\屏幕截图(49).png>)
+![Alt hook](<public/images/屏幕截图(49).png>)
+
+![Alt Cat](public/images/cat.jpg)
 
 ## Building Your Own Hooks
 

@@ -257,7 +257,7 @@ function Home({ allPostsData }) {
 }
 
 Home.propTypes = {
-  allPostsData: PropTypes.object,
+  allPostsData: PropTypes.array,
 };
 
 export default Home;

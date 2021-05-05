@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Timer from "../../src/components/Timer";
 import styles from "./list.module.scss";
 
 const getListData = () => new Array(100).fill(0).map((i, index) => index);
@@ -41,11 +42,11 @@ const List = () => {
       style={{ height: screenHeight + "px" }}
     >
       <div
-        className={`${styles.phantom}`}
+        className={styles.phantom}
         style={{ height: listHeight + "px" }}
       ></div>
       <div
-        className={`${styles.list}`}
+        className={styles.list}
         style={{
           height: screenHeight + "px",
           transform: `translate3D(0,${startOffset}px,0)`,
@@ -65,6 +66,7 @@ const List = () => {
             </li>
           ))}
       </div>
+      <Timer className={styles.timer} />
     </div>
   );
 };

@@ -6,8 +6,8 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 提出 hooks 的动机：
 
-> 1.  难以在组件间服用状态逻辑；render Props, HOC 会使增加组件层级。Hooks 不会增加组件层级。
-> 2.  复杂的组件变得难以理解。组件中充斥大量状态逻辑、副总用，同时生命周期函数内包含不相关的逻辑。Hooks 通过将相关逻辑组织在一起，把组件拆分成为更小的函数。
+> 1.  难以在组件间复用状态逻辑；render Props, HOC 会使增加组件层级。Hooks 不会增加组件层级。
+> 2.  复杂的组件变得难以理解。组件中充斥大量状态逻辑、副作用，同时生命周期函数内包含不相关的逻辑。Hooks 通过将相关逻辑组织在一起，把组件拆分成为更小的函数。
 > 3.  Class 使人困惑。this 的表现与其他语言不同。Class 组件在不注意时，会使得优化效果下降。Hooks 提供了不使用 class 条件下，使用 React 特性的能力。
 
 ## Hook at a Glance
@@ -65,7 +65,7 @@ Tip: 通过跳过 Effects 优化性能:
 ## Rules of Hooks
 
 1. 只在顶层调用 hooks，不要在循环、条件、嵌套中调用。这条规则确保每次 render 的时候 Hooks 都被以相同的顺序调用，从而使得在多次 useState 和 useEffect 调用时，React 能够正确的保存 hooks 的状态。
-2. 只在 React 函数组件内调用 Hooks。不要在正常的 JavaScript 函数中调用 hooks，正确的做法是：  
+2. 只在 React 函数组件内调用 Hooks。不要在普通的 JavaScript 函数中调用 hooks，正确的做法是：  
    &emsp; 1. 在 React 函数组件内调用 Hooks；  
    &emsp; 2. 在自定义的 Hooks 内调用 Hooks;
 3. React 依赖于 Hooks 调用的顺序获取 state，

@@ -58,7 +58,7 @@ useEffect 的设计意图: 强迫你关注数据流的改变,然后决定 effect
 ## 函数作为 effect 的依赖
 
 当忘记 effect 中使用函数依赖时,effects 就不会同步 props 和 state 带来的变更.  
-如果某些函数旨在 effect 中调用,可以定义在 effect 中.  
+如果某些函数只在 effect 中调用,可以定义在 effect 中.  
 如果函数没有使用组件中的任何值,可以将它提到外部定义.  
 使用 useCallback 包裹.通过添加一层依赖检查的方式解决问题.
 通过 useCallback,函数完全可以参与到数据流中.  

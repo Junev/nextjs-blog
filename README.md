@@ -42,7 +42,7 @@ useState 在第一次调用时创建状态，在后续调用时，提供当前�
 ## Using the Effect Hook
 
 副作用可分为：不需要清除的、需要清除的。  
-有时候，我们想在 dom 更新后运行一些代码，比如网络请求，dom 操作，记录日志，这些是不需要清除的副作用，因为他们运行之后就马上遗忘了。
+有时候，我们想在 dom 更新后运行一些代码，比如网络请求，dom 操作，记录日志，这些是不需要清除的副作用，因为它们运行之后就马上遗忘了。
 
 useEffect 做了什么?  
 &emsp;&emsp;通过使用 useEffect 告诉 React 你的组件想要在 render 后做什么。React 会记住你传递的副作用函数，并在每次 Dom 更新后执行它(通过 Deps 优化)。
@@ -111,7 +111,7 @@ Tip: 通过跳过 Effects 优化性能:
 2. 正确的参数：useContext(MyContext)
 3. 使用了 useContext 的组件会在 context 值改变时重新渲染。
 
-### Addtional Hooks
+### Additional Hooks
 
 #### useReducer
 
@@ -128,7 +128,7 @@ Tip: 通过跳过 Effects 优化性能:
 
 1. 返回一个被缓存的值。
 2. 传递给 useMemo 的函数在 render 的时候执行，不要在内部执行副作用。
-3. useMemo 只是一种性能优化，不是语义上的保证。未来，React 可能忘记缓存过的值，在下次 render 的时候宠幸计算。
+3. useMemo 只是一种性能优化，不是语义上的保证。未来，React 可能忘记缓存过的值，在下次 render 的时候重新计算。
 
 #### useRef
 
@@ -136,11 +136,11 @@ Tip: 通过跳过 Effects 优化性能:
 2. 用途：
    1. 操作 dom;
    2. 保存变量，类似于 class 中的实例变量。
-3. 除非做延迟初始化，避免在 render 时设置 refs（会导致令惊奇的行为）。典型使用：在 event handler 和 effects 中使用。
+3. 除非做延迟初始化，避免在 render 时设置 refs（会导致令惊奇的行为）。典型用法：在 event handler 和 effects 中使用。
 
 #### useImperativeHandle
 
-1. 当使用 ref 时自定义暴露给父组件的实例值。useImperativeHanlde 应该与 forwardRef 一起使用。
+1. 当使用 ref 时自定义暴露给父组件的实例值。useImperativeHandle 应该与 forwardRef 一起使用。
 
 #### useLayoutEffect
 

@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import React, { useReducer } from "react";
 
 const ActionTypes = {
   TOOGLE_TODO: "TOOGLE_TODO",
@@ -45,18 +45,26 @@ const todosReducer2 = createReducer(
   }
 );
 
+const TodoTitle = React.memo((props) => {
+  console.log("time");
+  return <p>hello</p>;
+});
+
 const TodoList = () => {
   const [todos, dispatch] = useReducer(todosReducer2, todosList);
   const handleTodo = (c) =>
     dispatch({ type: ActionTypes.TOOGLE_TODO, item: c });
   return (
-    <ul>
-      {todos.map((c) => (
-        <li key={c.item} onClick={() => handleTodo(c.item)}>
-          {c.status}:{c.item}
-        </li>
-      ))}
-    </ul>
+    <div>
+      <TodoTitle />
+      <ul>
+        {todos.map((c) => (
+          <li key={c.item} onClick={() => handleTodo(c.item)}>
+            {c.status}:{c.item}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

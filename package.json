@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "antd-mobile": "^2.3.4",
     "gray-matter": "^4.0.3",
     "moment": "^2.29.1",
     "next": "^10.0.0",
